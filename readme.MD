@@ -49,3 +49,27 @@ kafka-console-consumer.sh --topic bk-orders --bootstrap-server 127.0.0.1:9092
     - kafka 서버 -> Spark Structured Streamming(대규모 복잡한 가공처리,전처리) -> s3
         - 단순하게 적제하는 것이면 오버스펙임
         - kafka 서버 -> Spark Streamming (AWS EMR) -> s3
+
+
+# kafka > kafka connect > s3 : xx 데이터 실시간 업로드
+## 특징
+- kafka producer가 전송하는 데이터를 별도의 코드 없이 설정으로 s3에 업로드
+- 설정에서 패턴 정의
+- 데이터는 페이크데이터를 활용 (패키지 faker를 사용)
+    ```
+    pip install Faker
+    ```
+- 로그 발생, 전송등 포지션상 airflow 내부에 포함 x (별도 프로젝트로 진행)
+- 데이터 - 웹로그 - json 포멧
+    ```
+        ip, timestamp, method, url, status_code, user_agent
+    ```
+
+## 데이터 파이프라인
+- 로그 발생 -> kafka producer 메세지 전송 -> kafka 서버 도달 - kafka connect -> s3
+    - docker-compose.yaml 서비스 추가 필요
+        - kafka connect 추가 필요
+    - 패텉 정의 -> 설정 파일 -> s3_conn_config.json (이름은 커스텀)
+        - 데이터가 10개가 모이면 s3에 업로드 (버퍼링 10개로 잡음, 컨셉)
+        - 로그가 10개가 아주 늦게 모이거나, 도달하지 않으면 전송이 않되는 상황을 고려하여 일정 시간 지나면 자동 업로드(인터벌)
+        - 버킷준비 (본인 계정)
