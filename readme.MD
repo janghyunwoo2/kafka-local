@@ -70,9 +70,28 @@ kafka-console-consumer.sh --topic bk-orders --bootstrap-server 127.0.0.1:9092
     - docker-compose.yaml 서비스 추가 필요
         - kafka connect 추가 필요
     - 패턴 정의 -> 설정 파일 -> s3_conn_config.json (이름은 커스텀)
+        ```
+            ...
+            "s3.region": "ap-northeast-2",       # 본인 리전으로 수정
+            "s3.bucket.name": "airflow-ai-en-0", # 본인 버킷으로 수정
+            ...
+        ```
         - 데이터가 10개가 모이면 s3에 업로드 (버퍼링 10개로 잡음, 컨셉)
-        - 로그가 10개가 아주 늦게 모이거나, 도달하지 않으면 전송이 않되는 상황을 고려하여 일정 시간 지나면 자동 업로드(인터벌)
+        ```
+            "flush.size": "10",
+        ```
+        - 로그가 10개가 아주 늦게 모이거나, 도달하지 않으면 전송이 않되는 상황을 고려하여 일정 시간 지나면 자동 업로드(인터벌)        
+            ```
+                # 현재 s3_conn_config.json 파일에는 생략되어 있음
+                rotate.schedule.interval.ms: 시간값(ms 단위)
+            ```
         - 버킷준비 (본인 계정)
+            - 버킷 패스 패턴
+            ```
+                "path.format": "'year'=YYYY/'month'=MM/'day'=dd/'hour'=HH",
+                버킷/토픽/토픽명/2026/01/20/10/....
+            ```
+        
 
 - kafka connect
     - S3에 적제 담당
