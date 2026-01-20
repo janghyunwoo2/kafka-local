@@ -37,6 +37,9 @@ def send_msg():
         }
         
         # 3-2. 토픽("bk-web_logs")을 구성하여 전송
+        # 카프카 서버에서 CLI로 확인
+        # cd /opt/kafka/bin
+        # kafka-console-consumer.sh --topic web_logs --bootstrap-server 127.0.0.1:9092
         producer.send('web_logs', value=web_log)
         print(f'전송:   {web_log}')
 
