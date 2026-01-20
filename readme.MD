@@ -73,3 +73,6 @@ kafka-console-consumer.sh --topic bk-orders --bootstrap-server 127.0.0.1:9092
         - 데이터가 10개가 모이면 s3에 업로드 (버퍼링 10개로 잡음, 컨셉)
         - 로그가 10개가 아주 늦게 모이거나, 도달하지 않으면 전송이 않되는 상황을 고려하여 일정 시간 지나면 자동 업로드(인터벌)
         - 버킷준비 (본인 계정)
+
+- kafka connect
+    - S3에 적제 담당
