@@ -211,3 +211,6 @@ __marimo__/
 # git rm -r --cached logs/
 logs/
 logs/**
+
+# kafka-connect plugin 
+connect-plugins/

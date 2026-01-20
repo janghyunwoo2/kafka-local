@@ -69,7 +69,7 @@ kafka-console-consumer.sh --topic bk-orders --bootstrap-server 127.0.0.1:9092
 - 로그 발생 -> kafka producer 메세지 전송 -> kafka 서버 도달 - kafka connect -> s3
     - docker-compose.yaml 서비스 추가 필요
         - kafka connect 추가 필요
-    - 패텉 정의 -> 설정 파일 -> s3_conn_config.json (이름은 커스텀)
+    - 패턴 정의 -> 설정 파일 -> s3_conn_config.json (이름은 커스텀)
         - 데이터가 10개가 모이면 s3에 업로드 (버퍼링 10개로 잡음, 컨셉)
         - 로그가 10개가 아주 늦게 모이거나, 도달하지 않으면 전송이 않되는 상황을 고려하여 일정 시간 지나면 자동 업로드(인터벌)
         - 버킷준비 (본인 계정)
